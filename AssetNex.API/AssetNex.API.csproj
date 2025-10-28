@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\DTO\NewFolder1\**" />
+    <Compile Remove="Models\DTO\NewFolder2\**" />
+    <Compile Remove="Models\DTO\NewFolder\**" />
+    <Compile Remove="Models\NewFolder\**" />
+    <Content Remove="Models\DTO\NewFolder1\**" />
+    <Content Remove="Models\DTO\NewFolder2\**" />
+    <Content Remove="Models\DTO\NewFolder\**" />
+    <Content Remove="Models\NewFolder\**" />
+    <EmbeddedResource Remove="Models\DTO\NewFolder1\**" />
+    <EmbeddedResource Remove="Models\DTO\NewFolder2\**" />
+    <EmbeddedResource Remove="Models\DTO\NewFolder\**" />
+    <EmbeddedResource Remove="Models\NewFolder\**" />
+    <None Remove="Models\DTO\NewFolder1\**" />
+    <None Remove="Models\DTO\NewFolder2\**" />
+    <None Remove="Models\DTO\NewFolder\**" />
+    <None Remove="Models\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20250620070334_CreateSupportTable.cs" />
+    <Compile Remove="Migrations\20250620070334_CreateSupportTable.Designer.cs" />
+    <Compile Remove="Migrations\20250624045648_UpdatedSupportRequestTable.cs" />
+    <Compile Remove="Migrations\20250624045648_UpdatedSupportRequestTable.Designer.cs" />
+    <Compile Remove="Migrations\20250625052048_AddSoftwareLicenseSchema.cs" />
+    <Compile Remove="Migrations\20250625052048_AddSoftwareLicenseSchema.Designer.cs" />
+    <Compile Remove="Migrations\20250626052647_AddSupportRequestandSoftwareLicenseInfoTables.cs" />
+    <Compile Remove="Migrations\20250626052647_AddSupportRequestandSoftwareLicenseInfoTables.Designer.cs" />
+    <Compile Remove="Migrations\20250626060113_SupportReqsTable.cs" />
+    <Compile Remove="Migrations\20250626060113_SupportReqsTable.Designer.cs" />
+    <Compile Remove="Migrations\20250627114132_UpdateSofwareLicenseTable.cs" />
+    <Compile Remove="Migrations\20250627114132_UpdateSofwareLicenseTable.Designer.cs" />
+    <Compile Remove="Migrations\20250629183915_AddSoftwareLicenseTable.cs" />
+    <Compile Remove="Migrations\20250629183915_AddSoftwareLicenseTable.Designer.cs" />
+    <Compile Remove="Models\DTO\DisposeAssetRequestDto.cs" />
+    <Compile Remove="Models\DTO\SoftwareLicense\UpdateSoftwareLicenseDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    
+    <PackageReference Include="Dropbox.Api" Version="7.0.0" />
+    
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="7.0.20" />
+    
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.19" />
+    
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.77.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.8.0" />
+  </ItemGroup>
+	<PropertyGroup>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+
+</Project>

@@ -1,0 +1,61 @@
+﻿using Microsoft.EntityFrameworkCore;
+using AssetNex.API.Models.DomainModel;
+using System;
+
+namespace AssetNex.API.Data
+{
+    public class ApplicationDbContext : DbContext
+    {
+        //    public ApplicationDbContext(DbContextOptions options) : base(options)
+        //    { }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : base(options)
+        {
+        }
+
+
+        public DbSet<AssetType> AssetTypes { get; set; }
+
+        public DbSet<AssetInfo> AssetInfo { get; set; }
+
+        public DbSet<Assign> Assign { get; set; }
+
+        public DbSet<User> User { get; set; }
+
+
+        public DbSet<EWaste> EWastes { get; set; }
+
+        public DbSet<EWaste> DisposedAssets { get; set; }
+
+
+        public DbSet<EWaste> DisposableAssets { get; set; }
+
+        public DbSet<SoftwareLicenseInfo> SoftwareLicenseInfo { get; set; }
+
+        public DbSet<Hardware> Hardware { get; set; }
+
+        public DbSet<NewSupport> NewSupports { get; set; }
+
+        public DbSet<LiveLocation> Location { get; set; }
+
+
+        public DbSet<AssetLocations> AssetLocations { get; set; }
+
+        public DbSet<InventoryAlert> InventoryAlert { get; set; }
+
+   
+
+
+    }
+
+
+
+    }
+
+
+
+
+
+
+    
