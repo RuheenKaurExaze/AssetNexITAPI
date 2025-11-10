@@ -1,8 +1,9 @@
 ﻿
-using AssetNex.API.Repositories.Interface;
-using Microsoft.AspNetCore.Mvc;
 using AssetNex.API.Models.DomainModel;
 using AssetNex.API.Models.DTO.Asset;
+using AssetNex.API.Repositories.Interface;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNex.API.Controllers
 {
@@ -20,14 +21,14 @@ namespace AssetNex.API.Controllers
             this.assetsRepository = assetsRepository;
         }
 
-        
-        [HttpGet]
-        
-            public async Task<IActionResult> getAllAssets()
-            {
-                var assets = await assetsRepository.getAllAssets();
 
-         
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> getAllAssets()
+        {
+            var assets = await assetsRepository.getAllAssets();
+
+
             var response = assets.Select(asset => new AssetInfo
             {
                 Id = asset.Id,
@@ -39,19 +40,19 @@ namespace AssetNex.API.Controllers
                 User = asset.User,
                 UserId = asset.UserId,
                 Status = asset.Status,
-               
+
                 AssetTypeId = asset.AssetTypeId,
             })
             .ToList();
 
-                return Ok(response);
-            }
+            return Ok(response);
+        }
 
         [HttpPost]
 
         public async Task<IActionResult> CreateAsset([FromBody] CreateAssetDto dto)
 
-     
+
         {
             var assetType = await assetsRepository.GetAssetTypeByIdAsync(dto.AssetTypeId);
 
@@ -62,15 +63,15 @@ namespace AssetNex.API.Controllers
             var asset = new AssetInfo
             {
 
-                Id= Guid.NewGuid(),
-                Name= dto.Name,
+                Id = Guid.NewGuid(),
+                Name = dto.Name,
                 SerialNumber = dto.SerialNumber,
                 Department = dto.Department,
-                DateOfIssue= dto.DateOfIssue,
-                WarrantyDate= dto.WarrantyDate,
-                AssetTypeId= dto.AssetTypeId,
-                Status= dto.Status,
-                UserId= dto.UserId,
+                DateOfIssue = dto.DateOfIssue,
+                WarrantyDate = dto.WarrantyDate,
+                AssetTypeId = dto.AssetTypeId,
+                Status = dto.Status,
+                UserId = dto.UserId,
 
             };
 
@@ -149,11 +150,11 @@ namespace AssetNex.API.Controllers
                 }
                 var response = new AssetDto
                 {
-                    Id= asset.Id,
+                    Id = asset.Id,
                     Name = asset.Name,
                     SerialNumber = asset.SerialNumber,
                     Department = asset.Department,
-                    DateOfIssue =asset.DateOfIssue,
+                    DateOfIssue = asset.DateOfIssue,
                     WarrantyDate = asset.WarrantyDate,
                     Status = asset.Status,
                     UserId = asset.UserId,
