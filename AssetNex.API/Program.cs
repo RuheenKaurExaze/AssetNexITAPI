@@ -1,20 +1,19 @@
 ﻿
 
+using System.Text;
 using AssetNex.API.Data;
-using AssetNex.API.Repositories.Interface;
-using AssetNex.API.Repositories.Implementation;
-using AssetNex.API.Services;
 using AssetNex.API.Hubs;
+using AssetNex.API.Repositories.Implementation;
+using AssetNex.API.Repositories.Interface;
+using AssetNex.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -81,7 +80,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
 
-        
+
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
@@ -100,9 +99,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 
-
-
-// In Program.cs or Startup.cs
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular",
