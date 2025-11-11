@@ -157,6 +157,7 @@ app.UseRouting();
 app.MapControllers();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapHub<AlertHub>("/hubs/alerts");

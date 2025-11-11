@@ -41,6 +41,8 @@ namespace AssetNex.API.Controllers
                 Level = stock.Level,
                 Message = stock.Message,
                 CreatedAt = stock.CreatedAt,
+
+
             }).ToList();
 
             return Ok(response);

@@ -29,6 +29,7 @@ namespace AssetNex.API.Services
             asset.StockQuantity = newStock;
             await dbContext.SaveChangesAsync();
 
+
             if (asset.StockQuantity <= asset.Threshold)
             {
                 var alert = new InventoryAlert
@@ -48,6 +49,12 @@ namespace AssetNex.API.Services
         {
             await hub.Clients.All.SendAsync("ReceiveInventoryAlert", alert);
             logger.LogInformation("Broadcasted alert for {Asset} (Id: {Id})", alert.AssetName, alert.AssetId);
+
+
+
+
+
+
         }
 
 

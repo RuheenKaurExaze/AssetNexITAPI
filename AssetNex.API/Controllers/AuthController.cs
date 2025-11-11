@@ -19,8 +19,6 @@ namespace AssetNex.API.Controllers
         private readonly IConfiguration configuration;
         private readonly JwtSettings jwtSettings;
         private readonly ILogger<AuthController> logger;
-        
-        
 
 
         public AuthController(
@@ -35,7 +33,7 @@ namespace AssetNex.API.Controllers
         }
 
         [HttpPost("register")]
-        
+
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
         {
             if (!ModelState.IsValid)
@@ -50,9 +48,9 @@ namespace AssetNex.API.Controllers
             var user = new IdentityUser
 
             {
-                UserName= request.Email?.Trim(),
-                Email= request.Email?.Trim(),
-                
+                UserName = request.Email?.Trim(),
+                Email = request.Email?.Trim(),
+
             };
 
             var identityResult = await userManager.CreateAsync(user, request.Password);
@@ -85,8 +83,8 @@ namespace AssetNex.API.Controllers
         }
 
 
- 
-      
+
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
@@ -98,10 +96,10 @@ namespace AssetNex.API.Controllers
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
-              
-                 
+
+
                     new Claim(ClaimTypes.Name , user.UserName ?? string.Empty),
-                }; 
+                };
 
                 var userRoles = await userManager.GetRolesAsync(user);
                 foreach (var role in userRoles)
@@ -136,9 +134,9 @@ namespace AssetNex.API.Controllers
             public string Audience { get; set; } = string.Empty;
             public int ExpiryHours { get; set; }
 
-         
+
         }
 
-      
+
     }
 }

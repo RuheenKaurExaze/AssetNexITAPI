@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AssetNex.API.Models.DomainModel
 {
-  public class SoftwareLicenseInfo
+    public class SoftwareLicenseInfo
     {
-     
+
 
         [Key]
         public Guid Id { get; set; }
@@ -14,7 +14,6 @@ namespace AssetNex.API.Models.DomainModel
         public required string UserName { get; set; }
 
         public required string Request { get; set; }
-
 
         public required string EmployeeId { get; set; }
 
