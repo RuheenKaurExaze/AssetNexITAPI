@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.AspNet.Identity
 {
-    internal class IdentityUser
+    public class IdentityUser
     {
 
         public bool Success { get; set; }
@@ -13,3 +13,12 @@
         public string Password { get; set; }
     }
 }
+
+
+
+
+
+
+
+
+

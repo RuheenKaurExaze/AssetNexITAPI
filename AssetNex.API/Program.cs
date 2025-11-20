@@ -1,6 +1,7 @@
 ﻿
 
 using System.Text;
+using AssetNex.API.Controllers;
 using AssetNex.API.Data;
 using AssetNex.API.Hubs;
 using AssetNex.API.Repositories.Implementation;
@@ -14,11 +15,17 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AuthDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AssetNexConnectionString")));
@@ -50,52 +57,45 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 
-builder.Services.AddIdentityCore<IdentityUser>().AddRoles<IdentityRole>()
-.AddEntityFrameworkStores<AuthDbContext>()
-.AddDefaultTokenProviders();
+builder.Services.Configure<AuthController.JwtSettings>(
+
+    builder.Configuration.GetSection("JwtSettings"));
 
 
-
-builder.Services.Configure<IdentityOptions>(options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    options.Password.RequireDigit = false;
-    options.Password.RequireLowercase = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequiredUniqueChars = 0;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["JwtSettings: Issuer"],
+        ValidAudience = builder.Configuration["JwtSettings: Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("hubs/alerts"))
+            {
+                context.Token = accessToken;
+            }
+
+            return Task.CompletedTask;
+
+        }
+    };
 });
 
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-        };
 
 
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                var accessToken = context.Request.Query["access_token"];
-                var path = context.HttpContext.Request.Path;
-                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/alerts"))
-                {
-                    context.Token = accessToken;
-                }
-                return Task.CompletedTask;
-            }
-        };
-    });
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -112,9 +112,10 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
+
             new OpenApiSecurityScheme
             {
-                {
+                 Reference = new OpenApiReference{
                     Type = ReferenceType.SecurityScheme,
                     Id = "Bearer"
                 }
@@ -123,6 +124,8 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+
 
 builder.Services.AddAuthorization();
 
@@ -153,12 +156,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.MapControllers();
-
 app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.MapControllers();
+
 app.MapHub<AlertHub>("/hubs/alerts");
+
+app.Logger.LogInformation("Program Started");
 
 app.Run();

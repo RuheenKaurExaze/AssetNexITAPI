@@ -19,6 +19,7 @@ namespace AssetNex.API.Services
             this.hub = hub;
             this.dbContext = dbContext;
             this.logger = logger;
+
         }
 
         public async Task CheckAndBroadcastLowStockAsync(int assetId, int newStock)

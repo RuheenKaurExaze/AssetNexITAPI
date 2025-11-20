@@ -23,7 +23,6 @@ namespace AssetNex.API.Controllers
         {
             var assets = await ewasteRepository.GetDisposedAssets();
 
-
             var response = assets.Select(ewaste => new EWaste
             {
                 Id = Guid.NewGuid(),
@@ -44,18 +43,20 @@ namespace AssetNex.API.Controllers
         }
 
 
+        [HttpGet("{id}")]
+
+        public async Task<IActionResult> GetDisposedAssetsById()
+        {
+            var disposed = await ewasteRepository.GetDisposedAssetsAsync();
+            return Ok(disposed);
+
+        }
 
 
         [HttpPost("disposable-assets")]
-
-
         public async Task<IActionResult> DisposedAsset([FromBody] DisposeAssetRequestDto dto)
-
-
         {
             var ewaste = await ewasteRepository.GetEWasteByIdAsync(dto.AssetTypeId);
-
-
             if (ewaste == null)
                 return BadRequest("Asset type not found");
 
@@ -97,13 +98,6 @@ namespace AssetNex.API.Controllers
 
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetDisposedAssetsById()
-        {
-            var disposed = await ewasteRepository.GetDisposedAssetsAsync();
-            return Ok(disposed);
-        }
-
         [HttpPut]
         [Route("{id:guid}")]
 
@@ -121,7 +115,6 @@ namespace AssetNex.API.Controllers
                 DateOfIssue = request.DateOfIssue,
                 WarrantyDate = request.WarrantyDate,
                 Status = request.Status
-
 
             };
 
@@ -149,6 +142,7 @@ namespace AssetNex.API.Controllers
 
 
                 };
+
 
                 return Ok(response);
 

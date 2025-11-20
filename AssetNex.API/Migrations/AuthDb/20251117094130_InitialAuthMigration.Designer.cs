@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssetNex.API.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20250928181941_SeedRolesAndUsers")]
-    partial class SeedRolesAndUsers
+    [Migration("20251117094130_InitialAuthMigration")]
+    partial class InitialAuthMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace AssetNex.API.Migrations.AuthDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AssetNex.API.Models.DomainModel.RefreshTokenModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Expiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokenModel");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -65,6 +95,42 @@ namespace AssetNex.API.Migrations.AuthDb
                             ConcurrencyStamp = "570c928b-79ab-4090-bf75-e0cde29a0315",
                             Name = "Writer",
                             NormalizedName = "WRITER"
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityRole<int>");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Reader",
+                            NormalizedName = "READER"
                         });
                 });
 
@@ -173,6 +239,22 @@ namespace AssetNex.API.Migrations.AuthDb
                             SecurityStamp = "STATIC-SECURITY-STAMP-12345",
                             TwoFactorEnabled = false,
                             UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = "g72g9584-ec13-5423-c7b6-698255eb1eg",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "STATIC-CONCURRENCY-STAMP-12345",
+                            Email = "user@demo.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@DEMO.COM",
+                            NormalizedUserName = "USER",
+                            PasswordHash = "N2uIDYJOcFA4bBd2vnAMhM6arpJRBDn6CVxdSTTCwdPGzhSsz6D3ETHPd9BhmFLvYJUWf5qxhyDFcnnrAKd19w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "STATIC-SECURITY-STAMP-12345",
+                            TwoFactorEnabled = false,
+                            UserName = "user"
                         });
                 });
 
@@ -246,6 +328,16 @@ namespace AssetNex.API.Migrations.AuthDb
                         new
                         {
                             UserId = "f61f8473-db02-4312-b6a5-5871844da9cf",
+                            RoleId = "570c928b-79ab-4090-bf75-e0cde29a0315"
+                        },
+                        new
+                        {
+                            UserId = "g72g9584-ec13-5423-c7b6-698255eb1eg",
+                            RoleId = "463fb724-bf6a-459d-95d2-6e338fe4baf7"
+                        },
+                        new
+                        {
+                            UserId = "g72g9584-ec13-5423-c7b6-698255eb1eg",
                             RoleId = "570c928b-79ab-4090-bf75-e0cde29a0315"
                         });
                 });

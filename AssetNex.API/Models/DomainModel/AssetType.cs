@@ -1,9 +1,4 @@
 ﻿
-
-
-
-
-
 namespace AssetNex.API.Models.DomainModel
 {
     public class AssetType

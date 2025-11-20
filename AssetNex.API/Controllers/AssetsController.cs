@@ -2,7 +2,6 @@
 using AssetNex.API.Models.DomainModel;
 using AssetNex.API.Models.DTO.Asset;
 using AssetNex.API.Repositories.Interface;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetNex.API.Controllers
@@ -23,7 +22,7 @@ namespace AssetNex.API.Controllers
 
 
         [HttpGet]
-        [Authorize]
+
         public async Task<IActionResult> getAllAssets()
         {
             var assets = await assetsRepository.getAllAssets();

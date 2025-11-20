@@ -18,11 +18,12 @@ namespace AssetNex.API.Controllers
             this.alertService = alertService;
         }
 
-
         [HttpPost("updatestock/{assetId}")]
         public async Task<IActionResult> UpdateStock(int assetId, [FromBody] int newStock)
         {
+
             await alertService.CheckAndBroadcastLowStockAsync(assetId, newStock);
+
             return Ok(new { Message = "Stock updated and alert check triggered successfully" });
         }
 

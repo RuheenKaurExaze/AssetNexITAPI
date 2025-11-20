@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>56fffbba-0164-46bf-b33a-68869cc79b41</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\UserManagementController.cs" />
     <Compile Remove="Migrations\20250620070334_CreateSupportTable.cs" />
     <Compile Remove="Migrations\20250620070334_CreateSupportTable.Designer.cs" />
     <Compile Remove="Migrations\20250624045648_UpdatedSupportRequestTable.cs" />
@@ -42,6 +44,7 @@
     <Compile Remove="Migrations\20250629183915_AddSoftwareLicenseTable.Designer.cs" />
     <Compile Remove="Models\DTO\DisposeAssetRequestDto.cs" />
     <Compile Remove="Models\DTO\SoftwareLicense\UpdateSoftwareLicenseDto.cs" />
+    <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +52,8 @@
     <PackageReference Include="Dropbox.Api" Version="7.0.0" />
     
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="7.0.20" />
+    
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.17" />
     
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.19" />
@@ -61,8 +66,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.77.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Logging" Version="8.15.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.8.0" />
   </ItemGroup>
